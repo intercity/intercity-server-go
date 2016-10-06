@@ -97,12 +97,7 @@ func configureIntercity() {
 }
 
 func buildIntercity() {
-	utils.LogCommand("Building Intercity")
-	if _, err := utils.RunCommand("/var/intercity/launcher bootstrap app"); err != nil {
-		utils.LogError("Could not bootstrap Intercity", err)
-	}
-
-	utils.LogSuccess()
+	utils.BootstrapIntercity()
 }
 
 func startIntercity() {

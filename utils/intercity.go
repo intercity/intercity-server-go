@@ -1,7 +1,5 @@
 package utils
 
-import "log"
-
 func StartIntercity() {
 	LogCommand("Starting Intercity")
 
@@ -16,7 +14,25 @@ func RestartIntercity() {
 	LogCommand("Restarting Intercity")
 
 	if _, err := RunCommand("/var/intercity/launcher restart app"); err != nil {
-		log.Fatal(err)
+		LogError("Could not restart Intercity", err)
 	}
+	LogSuccess()
+}
+
+func BuildIntercity() {
+	LogCommand("Building Intercity")
+	if _, err := RunCommand("/var/intercity/launcher rebuild app"); err != nil {
+		LogError("Could not build Intercity", err)
+	}
+
+	LogSuccess()
+}
+
+func BootstrapIntercity() {
+	LogCommand("Bootstrapping Intercity")
+	if _, err := RunCommand("/var/intercity/launcher bootstrap app"); err != nil {
+		LogError("Could not bootstrap Intercity", err)
+	}
+
 	LogSuccess()
 }

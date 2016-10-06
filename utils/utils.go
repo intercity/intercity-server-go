@@ -29,3 +29,8 @@ func CheckValidDomain(domain string) bool {
 	var validID = regexp.MustCompile(`^([a-z0-9\*-]+\.)*[a-z0-9\*-]+$`)
 	return validID.MatchString(domain)
 }
+
+func CheckValidEmail(email string) bool {
+	var validID = regexp.MustCompile(`([^@]+)@([^\.]+)`)
+	return validID.MatchString(email)
+}
