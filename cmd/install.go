@@ -9,7 +9,8 @@ import (
 )
 
 var (
-	hostname string
+	hostname      string
+	useCustomPort bool
 )
 
 var installCmd = &cobra.Command{
@@ -20,6 +21,8 @@ var installCmd = &cobra.Command{
 
 func init() {
 	RootCmd.AddCommand(installCmd)
+
+	installCmd.Flags().Bool("use-custom-port", false, "Use Intercity with a custom port")
 }
 
 func Install(cmd *cobra.Command, args []string) {
@@ -28,6 +31,8 @@ func Install(cmd *cobra.Command, args []string) {
 	} else {
 		hostname = args[0]
 	}
+
+	useCustomPort, _ = cmd.Flags().GetBool("use-custom-port")
 
 	if utils.IntercityInstalled() {
 		utils.PrintUpdateInstructions()
@@ -82,6 +87,11 @@ func configureIntercity() {
 
 	configFile := "/var/intercity/containers/app.yml"
 	utils.ReplaceData(configFile, "intercity.example.com", hostname)
+
+	if useCustomPort {
+		utils.ReplaceData(configFile, "80:80", "8880:80")
+		utils.ReplaceData(configFile, "443:443", "8443:443")
+	}
 
 	utils.LogSuccess()
 }
