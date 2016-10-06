@@ -32,6 +32,7 @@ func EnableSSL(cmd *cobra.Command, args []string) {
 			utils.LogError("Valid email address is required", nil)
 		}
 
+		checkRequirements()
 		configureSSL()
 		utils.BuildIntercity()
 		utils.RestartIntercity()
@@ -50,4 +51,10 @@ func configureSSL() {
 
 	utils.ReplaceData(configFile, "LETSENCRYPT_ACCOUNT_EMAIL: \"example@example.com\"",
 		"LETSENCRYPT_ACCOUNT_EMAIL: \""+emailAddress+"\"")
+}
+
+func checkRequirements() {
+	if _, err := utils.RunCommand("cat /var/intercity/containers/app.yml | grep 8880:80"); err == nil {
+		utils.LogError("You can't enable SSL while running Intercity on a custom port", nil)
+	}
 }
