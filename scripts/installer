@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+version=0.3.0
+
+dir_name=intercity-server-${version}-linux-x86_64
+file_name=${dir_name}.tar.gz
+download_url=https://intercity.io/downloads/linux_x86_64/${file_name}
+
+bin_dir="/usr/local/bin"
+source_line="export PATH=\$PATH:${bin_dir}"
+
+echo "Downloading the Intercity CLI"
+wget -q $download_url -O /tmp/${file_name}
+
+echo "Installing Intercity CLI"
+tar xf /tmp/${file_name} -C /tmp/
+
+rm /usr/local/bin/intercity-server
+
+mv /tmp/intercity-server /usr/local/bin/
+
+rm /tmp/${file_name}
+
+echo "Installed: Intercity CLI (Version ${version})"
+echo
+echo
+echo "To start the installation of your Intercity Instance run:"
+echo "    intercity-server install"
+echo
+echo "Run 'intercity-server' to see help"
+echo

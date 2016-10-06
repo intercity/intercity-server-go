@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+if [[ $# > 0 ]]; then
+  GOOS=linux go build
+  COPYFILE_DISABLE=1 tar -cvf intercity-server-$1-linux-x86_64.tar.gz intercity-server
+else
+  echo "You need to provide a version as parameter"
+  exit 1
+fi
+
