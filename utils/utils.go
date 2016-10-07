@@ -16,7 +16,7 @@ func IntercityInstalled() bool {
 func PrintInstallationInstructions() {
 	println("Intercity is not installed.")
 	println("To install Intercity, run:")
-	println("    intercity-server install")
+	println("    intercity-server install [hostname]")
 }
 
 func PrintUpdateInstructions() {
